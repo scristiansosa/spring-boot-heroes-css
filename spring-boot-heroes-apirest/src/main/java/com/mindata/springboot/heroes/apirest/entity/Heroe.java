@@ -1,30 +1,16 @@
 package com.mindata.springboot.heroes.apirest.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Table(name = "heroes")
@@ -34,7 +20,7 @@ public class Heroe implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@ApiModelProperty(required = false, hidden = true)
-	private Long id;
+	private int id;
 
 	@NotNull
 	@ApiModelProperty(notes = "Nombre del Heroe:")
@@ -52,7 +38,7 @@ public class Heroe implements Serializable {
 
 	}
 
-	public Heroe(Long id, @NotNull String nombre, @NotNull String habilidad, @NotNull int edad) {
+	public Heroe(int id, @NotNull String nombre, @NotNull String habilidad, @NotNull int edad) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -60,11 +46,13 @@ public class Heroe implements Serializable {
 		this.edad = edad;
 	}
 
-	public Long getId() {
+
+
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
