@@ -43,6 +43,10 @@ public class HeroeController {
 		        .orElseThrow(() -> new IllegalArgumentException("el Heroe con id : " + id +" No existe, por favor intente con otro ID! "));
 		heroeRepository.deleteById(id);
 	}
-
-
+	
+	@GetMapping("/buscarHeroeQueContienen")
+	public List<Heroe> findByFiestnameEndWith(String nombre){
+		return (List<Heroe>) heroeRepository.findByFiestnameEndWith(nombre);
+	}
+	
 }
