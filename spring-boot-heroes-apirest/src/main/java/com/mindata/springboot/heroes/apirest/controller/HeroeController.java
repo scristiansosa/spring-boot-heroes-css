@@ -22,6 +22,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.mindata.springboot.heroes.apirest.entity.Heroe;
 import com.mindata.springboot.heroes.apirest.repository.HeroeRepository;
 
+import io.micrometer.core.annotation.Timed;
+
 @RestController
 public class HeroeController {
 
@@ -43,8 +45,9 @@ public class HeroeController {
 					.body("Error Message: Error al crear el Heroe");
 		}
 	}
-
+	
 	@GetMapping("/consultarHeroes")
+	@Timed(value ="get.heroes")
 	public List<Heroe> findAll() {
 		return (List<Heroe>) heroeRepository.findAll();
 	}
