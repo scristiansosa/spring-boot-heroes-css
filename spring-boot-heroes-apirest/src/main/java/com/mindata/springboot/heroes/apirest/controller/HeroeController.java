@@ -50,7 +50,7 @@ public class HeroeController {
 
 	@GetMapping("/buscarHeroePorId")
 	public Optional<Heroe> findById(int id) {
-		return heroeRepository.findById(id);	
+		return heroeRepository.findById(id);
 	}
 
 	@Transactional
@@ -66,22 +66,24 @@ public class HeroeController {
 		return (List<Heroe>) heroeRepository.findByFiestnameEndWith(nombre);
 	}
 
-	@PutMapping("/modificarHeroe")
-	public ResponseEntity<Object> setHeroeInfoById(@RequestBody Heroe heroe, @PathVariable final int id) {
+	@PutMapping("/modificarHeroe/{id}")
+	public ResponseEntity<Object> setHeroeInfoById(@RequestBody Heroe heroe, @PathVariable(value = "id") Integer id) {
 		logger.info("creaHeroe :" + heroe.toString());
 		try {
+			Optional<Heroe> heroeActual = heroeRepository.findById(id);
+			heroeActual.get().setEdad(heroe.getEdad());
+			heroeActual.get().setNombre(heroe.getNombre());
+			heroeActual.get().setHabilidad(heroe.getHabilidad());
+			heroeRepository.save(heroeActual.get());
 
-			Heroe crearHeroe = heroeRepository.setHeroeInfoById(id, heroe.getNombre(), heroe.getHabilidad(),
-					heroe.getEdad());
-			;
-			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-					.buildAndExpand(crearHeroe.getId()).toUri();
-			return ResponseEntity.created(location).build();
+			return ResponseEntity.status(HttpStatus.OK)
+					.body("El Heroe se modifico con exito:" + heroeActual.get().toString());
 		} catch (Exception ex) {
 			logger.error(ex.getMessage(), ex);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body("Error Message: Error al crear el Heroe");
 		}
+
 	}
 
 }
