@@ -36,7 +36,6 @@ class SpringBootHeroesApirestApplicationTests {
 		assertNotNull(heroes);
 	}
 
-	@Test
 	void findById() {
 		when(heroeRepository.findAll()).thenReturn(Datos.HEROESLIST);
 		Optional<Heroe> heroe = heroeRepository.findById(1);
