@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,9 +48,11 @@ public class HeroeController {
 	public List<Heroe> findAll() {
 		return (List<Heroe>) heroeRepository.findAll();
 	}
-
+	
+	@Cacheable("heroes")
 	@GetMapping("/buscarHeroePorId")
 	public Optional<Heroe> findById(int id) {
+		logger.info("buscar Heroe ID:" + id);
 		return heroeRepository.findById(id);
 	}
 
